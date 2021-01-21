@@ -28,8 +28,8 @@ import (
 	"github.com/pborman/uuid"
 	"github.com/pkg/errors"
 
-	"github.com/ory/ladon"
-	"github.com/ory/ladon/manager/memory"
+	"gitlab.host1plus.com/linas/ladon"
+	"gitlab.host1plus.com/linas/ladon/manager/memory"
 )
 
 func benchmarkLadon(i int, b *testing.B, warden *ladon.Ladon) {

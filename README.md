@@ -1,12 +1,4 @@
-<h1 align="center"><img src="./docs/images/banner_ladon.png" alt="ORY Ladon - Policy-based Access Control"></h1>
-
-[![Join the chat at https://www.ory.sh/chat](https://img.shields.io/badge/join-chat-00cc99.svg)](https://www.ory.sh/chat)
-[![Join newsletter](https://img.shields.io/badge/join-newsletter-00cc99.svg)](http://eepurl.com/bKT3N9)
-
-[![Build Status](https://travis-ci.org/ory/ladon.svg?branch=master)](https://travis-ci.org/ory/ladon)
-[![Coverage Status](https://coveralls.io/repos/ory/ladon/badge.svg?branch=master&service=github)](https://coveralls.io/github/ory/ladon?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ory/ladon)](https://goreportcard.com/report/github.com/ory/ladon)
-[![GoDoc](https://godoc.org/github.com/ory/ladon?status.png)](https://godoc.org/github.com/ory/ladon)
+<h1 align="center"><img src="./docs/images/banner_ladon.png" alt="Ladon - Policy-based Access Control"></h1>
 
 [Ladon](https://en.wikipedia.org/wiki/Ladon_%28mythology%29) is the serpent dragon protecting your resources.
 
@@ -17,18 +9,6 @@ you get fine-grained access control with the ability to answer questions in comp
 and large organizations. Ladon is inspired by [AWS IAM Policies](http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html).
 
 Ladon officially ships with an exemplary in-memory and SQL (officially supported: MySQL 5.5+, PostgreSQL 9.2+) storage implementations.
-Community-supported adapters are available for [CockroachDB](https://github.com/wehco/ladon-crdb).
-
-Ladon is now considered stable.
-
----
-
-ORY builds solutions for better internet security and accessibility. We have a couple more projects you might enjoy:
-
-* **[Hydra](https://github.com/ory/hydra)**, a security-first open source OAuth2 and OpenID Connect server for new and existing infrastructures that uses Ladon for access control.
-* **[ORY Editor](https://github.com/ory/editor)**, an extensible, modern WYSI editor for the web written in React.
-* **[Fosite](https://github.com/ory/fosite)**, an extensible security first OAuth 2.0 and OpenID Connect SDK for Go.
-* **[Dockertest](https://github.com/ory/dockertest)**: Write better integration tests with dockertest!
 
 ---
 
@@ -61,16 +41,13 @@ ORY builds solutions for better internet security and accessibility. We have a c
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-Ladon utilizes ory-am/dockertest for tests.
-Please refer to [ory-am/dockertest](https://github.com/ory-am/dockertest) for more information of how to setup testing environment.
-
 ## Installation
 
 This library works with Go 1.11+.
 
 ```
 export GO111MODULE=on
-go get github.com/ory/ladon
+go get gitlab.host1plus.com/linas/ladon
 ```
 
 Ladon uses [semantic versioning](http://semver.org/) and versions beginning with zero (`0.1.2`) might introduce backwards compatibility
@@ -194,7 +171,7 @@ are abstracted as the `ladon.Policy` interface, and Ladon comes with a standard 
 which is `ladon.DefaultPolicy`. Creating such a policy could look like:
 
 ```go
-import "github.com/ory/ladon"
+import "gitlab.host1plus.com/linas/ladon"
 
 var pol = &ladon.DefaultPolicy{
 	// A required unique identifier. Used primarily for database retrieval.
@@ -584,7 +561,7 @@ var err = warden.IsAllowed(&ladon.Request{
 You can add custom conditions by appending it to `ladon.ConditionFactories`:
 
 ```go
-import "github.com/ory/ladon"
+import "gitlab.host1plus.com/linas/ladon"
 
 func main() {
     // ...
@@ -612,8 +589,8 @@ Let's take a look how to instantiate those:
 
 ```go
 import (
-	"github.com/ory/ladon"
-	manager "github.com/ory/ladon/manager/memory"
+	"gitlab.host1plus.com/linas/ladon"
+	manager "gitlab.host1plus.com/linas/ladon/manager/memory"
 )
 
 
@@ -630,8 +607,8 @@ func main() {
 **SQL** (officially supported)
 
 ```go
-import "github.com/ory/ladon"
-import manager "github.com/ory/ladon/manager/sql"
+import "gitlab.host1plus.com/linas/ladon"
+import manager "gitlab.host1plus.com/linas/ladon/manager/sql"
 import "github.com/jmoiron/sqlx"
 import _ "github.com/go-sql-driver/mysql"
 
@@ -677,7 +654,7 @@ Now that we have defined our policies, we can use the warden to check if a reque
 will return `nil` if the access request can be granted and an error otherwise.
 
 ```go
-import "github.com/ory/ladon"
+import "gitlab.host1plus.com/linas/ladon"
 
 func main() {
     // ...
@@ -704,8 +681,8 @@ In order to keep track of authorization grants and denials, it is possible to at
 The provided `ladon.AuditLoggerInfo` outputs information about the policies involved when responding to authorization requests.
 
 ```go
-import "github.com/ory/ladon"
-import manager "github.com/ory/ladon/manager/memory"
+import "gitlab.host1plus.com/linas/ladon"
+import manager "gitlab.host1plus.com/linas/ladon/manager/memory"
 
 func main() {
 
@@ -781,12 +758,5 @@ Ladon does not use reflection for matching conditions to their appropriate struc
 
 **Create mocks**
 ```sh
-mockgen -package ladon_test -destination manager_mock_test.go github.com/ory/ladon Manager
+mockgen -package ladon_test -destination manager_mock_test.go gitlab.host1plus.com/linas/ladon Manager
 ```
-
-## Third Party Libraries
-By implementing the warden.Manager it is possible to create your own adapters to persist data in a datastore of your choice. Below are a list of third party implementations.
-
-- [Redis and RethinkDB](https://github.com/ory/ladon-community)
-- [CockroachDB](https://github.com/wehco/ladon-crdb)
-- [sql.DB](https://github.com/wirepair/ladonsecuritymanager)

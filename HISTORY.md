@@ -40,13 +40,12 @@ and restructures the repository.
 
 ### New location
 
-The location of this library changed from `github.com/ory-am/ladon` to `github.com/ory/ladon`.
+The location of this library changed from `github.com/ory-am/ladon` to `gitlab.host1plus.com/linas/ladon`.
 
 ### Deprecating Redis and RethinkDB
 
-Redis and RethinkDB are no longer maintained by ORY and were moved to
-[ory/ladon-community](https://github.com/ory/ladon-community). The adapters had various
-bugs and performance issues which is why they were removed from the official repository.
+Redis and RethinkDB are no longer maintained. The adapters had various bugs and performance issues
+which is why they were removed from the official repository.
 
 ### New packages
 

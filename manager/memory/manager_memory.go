@@ -25,9 +25,9 @@ import (
 
 	"github.com/pkg/errors"
 
-	. "github.com/ory/ladon"
-	"github.com/ory/pagination"
 	"sort"
+
+	. "gitlab.host1plus.com/linas/ladon"
 )
 
 // MemoryManager is an in-memory (non-persistent) implementation of Manager.
@@ -61,7 +61,16 @@ func (m *MemoryManager) GetAll(limit, offset int64) (Policies, error) {
 		i++
 	}
 
-	start, end := pagination.Index(int(limit), int(offset), len(m.Policies))
+	start, end := func(limit, offset, length int) (start, end int) {
+		if offset > length {
+			return length, length
+		} else if limit+offset > length {
+			return offset, length
+		}
+
+		return offset, offset + limit
+	}(int(limit), int(offset), len(m.Policies))
+
 	sort.Strings(keys)
 	ps := make(Policies, len(keys[start:end]))
 	i = 0

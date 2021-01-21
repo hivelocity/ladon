@@ -27,7 +27,7 @@ import (
 	"github.com/hashicorp/golang-lru"
 	"github.com/pkg/errors"
 
-	"github.com/ory/ladon/compiler"
+	"gitlab.host1plus.com/linas/ladon/compiler"
 )
 
 func NewRegexpMatcher(size int) *RegexpMatcher {
