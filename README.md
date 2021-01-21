@@ -16,7 +16,7 @@ In contrast to [ACL](https://en.wikipedia.org/wiki/Access_control_list) and [RBA
 you get fine-grained access control with the ability to answer questions in complex environments such as multi-tenant or distributed applications
 and large organizations. Ladon is inspired by [AWS IAM Policies](http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html).
 
-Ladon officially ships with an exemplary in-memory storage implementations.
+Ladon officially ships with an exemplary in-memory and SQL (officially supported: MySQL 5.5+, PostgreSQL 9.2+) storage implementations.
 Community-supported adapters are available for [CockroachDB](https://github.com/wehco/ladon-crdb).
 
 Ladon is now considered stable.
@@ -600,8 +600,11 @@ func main() {
 #### Persistence
 
 Obviously, creating such a policy is not enough. You want to persist it too. Ladon ships an interface `ladon.Manager` for
-this purpose. You have to implement that interface for persistence. An exemplary in-memory adapter can be found in
+this purpose. You have to implement that interface for persistence.
+An exemplary in-memory adapter can be found in
 [./manager/memory/manager_memory.go](./manager/memory/manager_memory.go):
+An examplary SQL adapter can be found in
+[./manager/memory/manager_memory.go](./manager/sql/manager_sql.go):
 
 Let's take a look how to instantiate those:
 
@@ -619,6 +622,49 @@ func main() {
 		Manager: manager.NewMemoryManager(),
 	}
 	err := warden.Manager.Create(pol)
+
+    // ...
+}
+```
+
+**SQL** (officially supported)
+
+```go
+import "github.com/ory/ladon"
+import manager "github.com/ory/ladon/manager/sql"
+import "github.com/jmoiron/sqlx"
+import _ "github.com/go-sql-driver/mysql"
+
+func main() {
+    // The database manager expects a sqlx.DB object
+    //
+    // For MySQL, be sure to include parseTime=true in the connection string
+    // You can find all of the supported MySQL connection string options for the
+    // driver at: https://github.com/go-sql-driver/mysql
+    //
+    db, err = sqlx.Open("mysql", "user:pass@tcp(127.0.0.1:3306)/?parseTime=true")
+    // Or, if using postgres:
+    //  import _ "github.com/lib/pq"
+    //
+    //  db, err = sqlx.Open("postgres", "postgres://foo:bar@localhost/ladon")
+    if err != nil {
+      log.Fatalf("Could not connect to database: %s", err)
+    }
+
+    warden := &ladon.Ladon{
+        Manager: manager.NewSQLManager(db, nil),
+    }
+
+    // You must call SQLManager.CreateSchemas(schema, table) before use
+    // to apply the necessary SQL migrations
+    //
+    // You can provide your own schema and table name or pass
+    // empty strings to use the default
+    n, err := warden.Manager.CreateSchemas("", "")
+    if err != nil {
+      log.Fatalf("Failed to create schemas: %s", err)
+    }
+    log.Printf("applied %d migrations", n)
 
     // ...
 }

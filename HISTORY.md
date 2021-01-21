@@ -16,10 +16,7 @@
 
 ## 1.0.0
 
-The SQL storage implementation has been removed. The reason being that it had serious scalability issues which could
-cause trouble in high-throughput environments.
-
-Everything else stays the same, ORY Ladon is now feature-complete.
+ORY Ladon is now feature-complete.
 
 ## 0.8.0
 
