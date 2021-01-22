@@ -1,0 +1,29 @@
+{
+    "gopls": {
+        "build.env": {"GOFLAGS": "-tags=test"}
+    },
+    "go.toolsEnvVars": {
+        "GO111MODULE": "on",
+        "GOSUMDB": "off",
+        "GOPROXY": "direct",
+        "GOPRIVATE": "gitlab.host1plus.com"
+    },
+    "terminal.integrated.env.linux": {
+        "GO111MODULE": "on",
+        "GOSUMDB": "off",
+        "GOPROXY": "direct",
+        "GOPRIVATE": "gitlab.host1plus.com"
+    },
+    "terminal.integrated.env.osx": {
+        "GO111MODULE": "on",
+        "GOSUMDB": "off",
+        "GOPROXY": "direct",
+        "GOPRIVATE": "gitlab.host1plus.com"
+    },
+    "terminal.integrated.env.windows": {
+        "GO111MODULE": "on",
+        "GOSUMDB": "off",
+        "GOPROXY": "direct",
+        "GOPRIVATE": "gitlab.host1plus.com"
+    }
+}
