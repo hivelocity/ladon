@@ -51,10 +51,6 @@ var policyCases = []*DefaultPolicy{
 	},
 }
 
-type TestMeta struct {
-	Key string `json:"key"`
-}
-
 func TestHasAccess(t *testing.T) {
 	assert.True(t, policyCases[0].AllowAccess())
 	assert.False(t, policyCases[1].AllowAccess())
@@ -74,24 +70,6 @@ func TestMarshalling(t *testing.T) {
 			assert.Equal(t, c, &cc)
 		})
 	}
-}
-
-func TestMetaUnmarshalling(t *testing.T) {
-	var m = TestMeta{
-		Key: "test",
-	}
-	var mm TestMeta
-	var p = DefaultPolicy{}
-
-	data, err := json.Marshal(&m)
-	RequireError(t, false, err)
-
-	p.Meta = data
-
-	err = p.UnmarshalMeta(&mm)
-	RequireError(t, false, err)
-
-	assert.Equal(t, &m, &mm)
 }
 
 func TestGetters(t *testing.T) {
